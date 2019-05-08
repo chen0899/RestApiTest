@@ -4,6 +4,8 @@ import com.example.entity.ServiceProviders;
 import com.example.repository.ServiceProviderRepository;
 import com.example.service.ServiceProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,5 +57,12 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
         serviceProviders.setImage(fileName);
         serviceProviderRepository.save(serviceProviders);
+    }
+
+    @Override
+    public Page<ServiceProviders> getServiceProvidersByPage(int page) {
+        Page<ServiceProviders> serviceProviders =
+                serviceProviderRepository.findAll(new PageRequest(page,4));
+        return serviceProviders;
     }
 }
